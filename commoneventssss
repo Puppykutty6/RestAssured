@@ -1,0 +1,40 @@
+package coreUtilities.utils;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+
+import io.restassured.RestAssured;
+import io.restassured.specification.RequestSpecification;
+
+public class CommonEvents {
+	public CommonEvents() {
+		
+	}
+	public String getProperty(String Property)
+	{
+		String value="";
+		try
+		{
+			FileInputStream fis=new FileInputStream("C:\\Users\\Administrator\\Desktop\\mahendranvalayiramcognizant.com_1761729471381\\src\\main\\resources\\config.properties");
+			Properties prop=new Properties();
+			prop.load(fis);
+			value = prop.getProperty(Property);
+			
+		}
+		catch(Exception e)
+		{
+		e.printStackTrace();
+		}
+		return value;
+	}
+	public void getbaseUrl()
+	{
+		RestAssured.baseURI=getProperty("base.url");
+		
+	}
+	public RequestSpecification getRequest()
+	{
+	return RestAssured.given().header("authorization", "bearer "+getProperty("auth.bearer.token"));
+	
+	}
+}
